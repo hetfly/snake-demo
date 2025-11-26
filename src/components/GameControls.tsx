@@ -15,20 +15,27 @@ export function GameControls() {
   };
 
   return (
-    <div className="game-controls">
-      <AnimatePresence mode="wait">
-        {gameStatus === 'idle' && (
+    <AnimatePresence mode="wait">
+      {gameStatus === 'idle' && (
+        <motion.div
+          key="idle"
+          className="start-screen-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <motion.div
-            key="idle"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="start-screen"
+            className="start-screen-content"
+            initial={{ scale: 0.8, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.8, y: 20 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
             <motion.h2
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: 'reverse', duration: 1.5 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               SNAKE GAME
             </motion.h2>
@@ -37,29 +44,46 @@ export function GameControls() {
               className="start-button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
             >
               Start Game
             </motion.button>
-            <p className="instructions">
+            <motion.p
+              className="instructions"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
               Use Arrow Keys or WASD to move
               <br />
               Press Space to pause
-            </p>
+            </motion.p>
           </motion.div>
-        )}
+        </motion.div>
+      )}
 
-        {gameStatus === 'paused' && (
+      {gameStatus === 'paused' && (
+        <motion.div
+          key="paused"
+          className="pause-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <motion.div
-            key="paused"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="pause-overlay"
+            className="pause-content"
+            initial={{ scale: 0.8, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.8, y: 20 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
             <motion.h2
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: 'reverse', duration: 1 }}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
             >
               PAUSED
             </motion.h2>
@@ -68,13 +92,16 @@ export function GameControls() {
               className="resume-button"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
             >
               Resume
             </motion.button>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

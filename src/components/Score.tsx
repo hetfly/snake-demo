@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../store/gameStore';
 
 export function Score() {
-  const { score, highScore } = useGameStore();
+  const { score } = useGameStore();
 
   return (
     <div className="score-container">
@@ -20,10 +20,6 @@ export function Score() {
             {score}
           </motion.span>
         </AnimatePresence>
-      </div>
-      <div className="score-item">
-        <span className="score-label">High Score</span>
-        <span className="score-value">{highScore}</span>
       </div>
     </div>
   );

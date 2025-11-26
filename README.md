@@ -1,4 +1,87 @@
-# React + TypeScript + Vite
+# Snake Game with Leaderboard
+
+A modern Snake game built with React, TypeScript, and Vite. Features include:
+- Classic Snake gameplay
+- Score tracking and leaderboard
+- Multiple themes (light/dark)
+- Responsive design
+- Smooth animations
+
+## Leaderboard Setup
+
+The game includes a leaderboard feature that can use Supabase (free tier) for persistent storage, or fall back to in-memory storage if not configured.
+
+### Option 1: Using Supabase (Recommended)
+
+1. **Create a Supabase account** (free at [supabase.com](https://supabase.com))
+
+2. **Create a new project** in your Supabase dashboard
+
+3. **Create the leaderboard table**:
+   - Go to the SQL Editor in your Supabase dashboard
+   - Run this SQL to create the table:
+   ```sql
+   CREATE TABLE leaderboard (
+     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+     player_name TEXT NOT NULL,
+     score INTEGER NOT NULL,
+     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+   );
+
+   -- Enable Row Level Security (RLS)
+   ALTER TABLE leaderboard ENABLE ROW LEVEL SECURITY;
+
+   -- Create a policy that allows anyone to read and insert
+   CREATE POLICY "Allow public read access" ON leaderboard
+     FOR SELECT USING (true);
+
+   CREATE POLICY "Allow public insert access" ON leaderboard
+     FOR INSERT WITH CHECK (true);
+   ```
+
+4. **Get your API credentials**:
+   - Go to Project Settings → API
+   - Copy your "Project URL" and "anon/public" key
+
+5. **Configure environment variables**:
+   - Copy `.env.example` to `.env`
+   - Add your Supabase credentials:
+   ```
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-anon-key-here
+   ```
+
+### Option 2: Without Supabase
+
+If you don't configure Supabase, the leaderboard will work with in-memory storage. Scores will be lost when you refresh the page, but the feature will still function for testing.
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## How to Play
+
+- Use arrow keys or WASD to control the snake
+- Eat food to grow and increase your score
+- Avoid hitting walls or yourself
+- Submit your score to the leaderboard when the game ends
+- View the leaderboard anytime by clicking the "Leaderboard" button
+
+---
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
