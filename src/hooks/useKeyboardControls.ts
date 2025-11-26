@@ -27,6 +27,17 @@ export function useKeyboardControls() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Ignore keyboard controls if user is typing in an input field
+      const activeElement = document.activeElement;
+      const isInputFocused = 
+        activeElement?.tagName === 'INPUT' ||
+        activeElement?.tagName === 'TEXTAREA' ||
+        activeElement?.getAttribute('contenteditable') === 'true';
+      
+      if (isInputFocused) {
+        return; // Don't process game controls when typing
+      }
+
       // Handle spacebar for pause/resume/start
       if (event.code === 'Space') {
         event.preventDefault();
